@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VORTEX | Curadoria Exclusiva</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        vortex: {
+                            black: '#0A0A0A',
+                            dark: '#121212',
+                            card: '#1A1A1A',
+                            border: '#2A2A2A',
+                            gray: '#8E8E93',
+                            light: '#E5E5EA',
+                            white: '#FFFFFF',
+                            shopee: '#EE4D2D',
+                            shein: '#222222',
+                            mercadolivre: '#FFE600',
+                            tiktok: '#00F2FE',
+                            amazon: '#FF9900'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #E5E5EA;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-neutral-800 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-[#0A0A0A]/80 backdrop-blur-md border-b border-vortex-border">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="filterPlatform('all')">
+                <div class="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center font-bold text-xl tracking-tighter shadow-lg">
+                    VX
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wider text-white">VORTEX</h1>
+                    <p class="text-xs text-vortex-gray tracking-widest uppercase">Curador Oficial</p>
+                </div>
+            </div>
+            
+            <a href="https://wa.me/5535997169043" target="_blank" rel="noopener noreferrer" 
+               class="flex items-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white px-4 py-2 rounded-full text-xs font-medium transition border border-vortex-border">
+                <i data-lucide="message-square" class="w-4 h-4 text-green-500"></i>
+                <span class="hidden sm:inline">Contato</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto px-4 py-6 w-full flex-grow">
+
+        <!-- Banner / CTA Principal -->
+        <section class="mb-8 bg-gradient-to-r from-neutral-900 via-neutral-900 to-neutral-950 p-6 rounded-2xl border border-vortex-border relative overflow-hidden text-center sm:text-left">
+            <div class="relative z-10 max-w-xl">
+                <div class="inline-flex items-center gap-2 bg-neutral-800 px-3 py-1 rounded-full text-xs text-vortex-gray mb-3 border border-neutral-700">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    VORTEX SELECTION
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">Seleção exclusiva dos melhores achados com frete rápido e desconto.</h2>
+                <p class="text-xs sm:text-sm text-vortex-gray mb-5">Escolha os produtos abaixo ou envie a foto diretamente no WhatsApp para receber o link de compra.</p>
+                <a href="https://wa.me/5535997169043?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Vortex%20e%20gostaria%20de%20ajuda%20para%20encontrar%20um%20produto." 
+                   target="_blank" 
+                   class="inline-flex items-center justify-center gap-2 bg-white text-black font-semibold text-xs sm:text-sm px-5 py-3 rounded-xl hover:bg-neutral-200 transition shadow-md w-full sm:w-auto">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    Pedir Produto via WhatsApp
+                </a>
+            </div>
+            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-neutral-800/20 rounded-full blur-3xl pointer-events-none"></div>
+        </section>
+
+        <!-- Pesquisa e Seleção de Plataformas -->
+        <section class="mb-6 space-y-4">
+            <!-- Barra de Pesquisa -->
+            <div class="relative">
+                <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-3.5 text-vortex-gray"></i>
+                <input type="text" id="searchInput" placeholder="Buscar produtos em todas as abas (Shopee, Shein, ML, TikTok, Amazon)..." 
+                       class="w-full bg-vortex-dark border border-vortex-border text-white text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-neutral-500 transition placeholder-vortex-gray">
+            </div>
+
+            <!-- Navegação por Abas (Shopee, Shein, Mercado Livre, TikTok Shop, Amazon) -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 hide-scrollbar text-xs sm:text-sm">
+                <button onclick="filterPlatform('all')" id="tab-all" class="platform-tab px-4 py-2.5 rounded-xl border border-vortex-border bg-white text-black font-semibold whitespace-nowrap transition flex items-center gap-2">
+                    <i data-lucide="globe" class="w-4 h-4"></i> Todas
+                </button>
+                <button onclick="filterPlatform('shopee')" id="tab-shopee" class="platform-tab px-4 py-2.5 rounded-xl border border-vortex-border bg-vortex-dark text-vortex-gray hover:text-white whitespace-nowrap transition flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> Shopee
+                </button>
+                <button onclick="filterPlatform('shein')" id="tab-shein" class="platform-tab px-4 py-2.5 rounded-xl border border-vortex-border bg-vortex-dark text-vortex-gray hover:text-white whitespace-nowrap transition flex items-center gap-2">
+                    <i data-lucide="shirt" class="w-4 h-4"></i> Shein
+                </button>
+                <button onclick="filterPlatform('mercadolivre')" id="tab-mercadolivre" class="platform-tab px-4 py-2.5 rounded-xl border border-vortex-border bg-vortex-dark text-vortex-gray hover:text-white whitespace-nowrap transition flex items-center gap-2">
+                    <i data-lucide="package" class="w-4 h-4"></i> Mercado Livre
+                </button>
+                <button onclick="filterPlatform('tiktok')" id="tab-tiktok" class="platform-tab px-4 py-2.5 rounded-xl border border-vortex-border bg-vortex-dark text-vortex-gray hover:text-white whitespace-nowrap transition flex items-center gap-2">
+                    <i data-lucide="video" class="w-4 h-4"></i> TikTok Shop
+                </button>
+                <button onclick="filterPlatform('amazon')" id="tab-amazon" class="platform-tab px-4 py-2.5 rounded-xl border border-vortex-border bg-vortex-dark text-vortex-gray hover:text-white whitespace-nowrap transition flex items-center gap-2">
+                    <i data-lucide="box" class="w-4 h-4"></i> Amazon
+                </button>
+            </div>
+        </section>
+
+        <!-- Grid de Produtos -->
+        <section>
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Inserido dinamicamente via JS -->
+            </div>
+            
+            <div id="emptyState" class="hidden text-center py-12">
+                <i data-lucide="package-search" class="w-12 h-12 text-vortex-gray mx-auto mb-3 stroke-[1.5]"></i>
+                <p class="text-vortex-gray text-sm">Nenhum produto encontrado nesta categoria ou busca.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Admin -->
+    <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-vortex-card border border-vortex-border rounded-2xl p-6 w-full max-w-lg relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeAdminModal()" class="absolute right-4 top-4 text-vortex-gray hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div id="loginStep">
+                <h3 class="text-lg font-bold text-white mb-1">Painel do Administrador</h3>
+                <p class="text-xs text-vortex-gray mb-4">Insira a chave de acesso para gerenciar os produtos da Vortex.</p>
+                <input type="password" id="adminPassword" placeholder="Senha de acesso" class="w-full bg-vortex-dark border border-vortex-border text-white text-sm rounded-xl px-4 py-3 mb-4 focus:outline-none focus:border-neutral-500">
+                <button onclick="authenticateAdmin()" class="w-full bg-white text-black font-semibold text-sm py-3 rounded-xl hover:bg-neutral-200 transition">
+                    Entrar no Painel
+                </button>
+            </div>
+
+            <div id="dashboardStep" class="hidden space-y-6">
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-1">Gerenciador de Links</h3>
+                    <p class="text-xs text-vortex-gray">Adicione novos produtos para exibir na plataforma.</p>
+                </div>
+
+                <form id="addProductForm" onsubmit="handleAddProduct(event)" class="space-y-4 text-xs">
+                    <div>
+                        <label class="block text-vortex-gray mb-1">Nome do Produto</label>
+                        <input type="text" id="prodTitle" required class="w-full bg-vortex-dark border border-vortex-border text-white rounded-lg px-3 py-2.5 focus:outline-none focus:border-neutral-500">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-vortex-gray mb-1">Plataforma</label>
+                            <select id="prodPlatform" class="w-full bg-vortex-dark border border-vortex-border text-white rounded-lg px-3 py-2.5 focus:outline-none focus:border-neutral-500">
+                                <option value="shopee">Shopee</option>
+                                <option value="shein">Shein</option>
+                                <option value="mercadolivre">Mercado Livre</option>
+                                <option value="tiktok">TikTok Shop</option>
+                                <option value="amazon">Amazon</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-vortex-gray mb-1">Preço (R$)</label>
+                            <input type="text" id="prodPrice" required placeholder="199,90" class="w-full bg-vortex-dark border border-vortex-border text-white rounded-lg px-3 py-2.5 focus:outline-none focus:border-neutral-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-vortex-gray mb-1">URL da Imagem do Produto</label>
+                        <input type="url" id="prodImage" required placeholder="https://exemplo.com/imagem.jpg" class="w-full bg-vortex-dark border border-vortex-border text-white rounded-lg px-3 py-2.5 focus:outline-none focus:border-neutral-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-vortex-gray mb-1">Link de Afiliado</label>
+                        <input type="url" id="prodUrl" required placeholder="https://..." class="w-full bg-vortex-dark border border-vortex-border text-white rounded-lg px-3 py-2.5 focus:outline-none focus:border-neutral-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-vortex-gray mb-1">Selo / Tag (Opcional)</label>
+                        <input type="text" id="prodTag" placeholder="Mais Vendido, Frete Grátis, etc." class="w-full bg-vortex-dark border border-vortex-border text-white rounded-lg px-3 py-2.5 focus:outline-none focus:border-neutral-500">
+                    </div>
+
+                    <button type="submit" class="w-full bg-white text-black font-semibold py-3 rounded-xl hover:bg-neutral-200 transition text-sm">
+                        Cadastrar Produto
+                    </button>
+                </form>
+
+                <hr class="border-vortex-border">
+
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-3">Produtos Cadastrados</h4>
+                    <div id="adminProductList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                        <!-- Itens do admin -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-vortex-border mt-12 py-6 bg-[#0A0A0A]">
+        <div class="max-w-4xl mx-auto px-4 text-center text-xs text-vortex-gray space-y-3">
+            <p>© 2026 VORTEX. Todos os direitos reservados.</p>
+            <div>
+                <button onclick="openAdminModal()" class="hover:text-white transition flex items-center gap-1 mx-auto text-[11px] bg-neutral-900 px-3 py-1.5 rounded-full border border-vortex-border">
+                    <i data-lucide="lock" class="w-3 h-3"></i> Área Restrita (Admin)
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Senha do Administrador
+        const ADMIN_PASSWORD = 'vortex2026';
+        let currentPlatformFilter = 'all';
+
+        // Produtos Iniciais Padrão
+        const defaultProducts = [
+            {
+                id: 1,
+                title: 'Sneakers Streetwear Fashion White Brown',
+                platform: 'shopee',
+                price: '179,90',
+                image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500&auto=format&fit=crop&q=60',
+                url: 'https://shopee.com.br',
+                tag: 'Mais Vendido'
+            },
+            {
+                id: 2,
+                title: 'Tênis Esportivo Casual Red Edition',
+                platform: 'shopee',
+                price: '199,90',
+                image
